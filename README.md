@@ -1,6 +1,6 @@
 # trying-cairo
 
-Simple test using Cairo new syntax & new starknet-rs lib.
+Simple test using Cairo new syntax (*based on rust*) & new starknet-foundry lib.
 
 ## Dependencies
 
