@@ -4,7 +4,8 @@ Simple test using Cairo new syntax & new starknet-rs lib.
 
 ## Dependencies
 
-- starknet-foundry, see [here](https://foundry-rs.github.io/starknet-foundry/getting-started/installation.html) to install.
+- [cairo](https://book.cairo-lang.org/ch01-01-installation.html),
+- [starknet-foundry](https://foundry-rs.github.io/starknet-foundry/getting-started/installation.html).
 
 ## Run tests
 
