@@ -60,14 +60,28 @@ fn test_get_total_names() {
 }
 
 #[test]
-fn test_set_owner() {
+fn test_set_owner_as_owner() {
     let contract_address = _deploy_contract();
     let safe_dispatcher = INameRegistrySafeDispatcher { contract_address };
 
+    // stub
+    assert(1 == 1, 'stub');
+}
+
+#[test]
+fn test_set_owner_as_non_owner() {
+    let contract_address = _deploy_contract();
+    let safe_dispatcher = INameRegistrySafeDispatcher { contract_address };
+
+    let old_owner: ContractAddress = _get_owner().address;
     let random_address: felt252 = 27547869876870;
     let random_address: ContractAddress = random_address.try_into().unwrap();
 
     safe_dispatcher.set_owner(random_address);
+
+    let new_owner: ContractAddress = safe_dispatcher.get_owner().unwrap();
+    assert(new_owner != random_address, 'owner should not change');
+    assert(new_owner == old_owner, 'old owner should not change');
 }
 
 #[test]
