@@ -88,13 +88,6 @@ fn test_set_owner_as_non_owner() {
 fn test_store_name() {
     let contract_address = _deploy_contract();
     let safe_dispatcher = INameRegistrySafeDispatcher { contract_address };
-    safe_dispatcher.store_name('something random');
-}
-
-#[test]
-fn test_get_name() {
-    let contract_address = _deploy_contract();
-    let safe_dispatcher = INameRegistrySafeDispatcher { contract_address };
 
     let owner: Person = _get_owner();
     let expected = 'something';
@@ -108,20 +101,20 @@ fn test_get_name() {
 }
 
 #[test]
-fn test_get_name_owner() {
+fn test_get_name() {
     let contract_address = _deploy_contract();
     let safe_dispatcher = INameRegistrySafeDispatcher { contract_address };
 
     let owner: Person = _get_owner();
 
-    let expected = _get_owner().name;
+    let expected = _get_owner().name; // owner name is set in the constructor
     let out = safe_dispatcher.get_name(owner.address).unwrap();
 
     assert(out == expected, 'owners name is not correct')
 }
 
 #[test]
-fn test_get_name_for_inexistant_address() {
+fn test_get_name_inexistant_address() {
     let contract_address = _deploy_contract();
     let safe_dispatcher = INameRegistrySafeDispatcher { contract_address };
 
