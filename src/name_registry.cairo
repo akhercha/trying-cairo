@@ -1,3 +1,4 @@
+use traits::Into;
 use starknet::ContractAddress;
 
 #[starknet::interface]
@@ -11,8 +12,9 @@ trait INameRegistry<TContractState> {
 
 #[starknet::contract]
 mod NameRegistry {
-    use starknet::{ContractAddress, get_caller_address};
-
+    use traits::Into;
+    use debug::PrintTrait;
+    use starknet::{ContractAddress, ContractAddressIntoFelt252, get_caller_address};
     use super::INameRegistry;
 
     #[storage]
@@ -89,7 +91,9 @@ mod NameRegistry {
         }
 
         fn _only_owner(self: @ContractState) {
-            let caller = get_caller_address();
+            let caller: ContractAddress = get_caller_address();
+            let caller_as_felt: felt252 = caller.into();
+            caller_as_felt.print();
             assert(caller == self.owner.read().address, 'Caller is not the owner');
         }
 

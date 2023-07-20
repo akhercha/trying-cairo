@@ -15,6 +15,11 @@ use test_contracts::name_registry::INameRegistrySafeDispatcher;
 use test_contracts::name_registry::INameRegistrySafeDispatcherTrait;
 use test_contracts::name_registry::NameRegistry::Person;
 
+const CALLER_ADDRESS: felt252 = 257;
+fn _get_caller_address() -> ContractAddress {
+    CALLER_ADDRESS.try_into().unwrap()
+}
+
 const OWNER_ADDRESS: felt252 = 333456747;
 fn _get_owner() -> Person {
     Person { name: 'admin', address: OWNER_ADDRESS.try_into().unwrap() }
@@ -89,12 +94,12 @@ fn test_store_name() {
     let contract_address = _deploy_contract();
     let safe_dispatcher = INameRegistrySafeDispatcher { contract_address };
 
-    let owner: Person = _get_owner();
+    let caller_address: ContractAddress = _get_caller_address();
     let expected = 'something';
 
     safe_dispatcher.store_name(expected);
 
-    match safe_dispatcher.get_name(owner.address) {
+    match safe_dispatcher.get_name(caller_address) {
         Result::Ok(out) => assert(out == expected, 'Invalid name from get_name()'),
         Result::Err(_) => panic_with_felt252('Failed to get name'),
     }
